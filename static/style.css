@@ -1,0 +1,27 @@
+header, footer {
+        background-color: #CDE1AA;
+}
+
+body {
+        background-color: #F0F7E2;
+        font-family: 'Arial', sans-serif;
+}
+
+.heading {
+        color: #618264;
+        font-weight: bold;
+}
+
+.list-group-item {
+        background-color: #F0F7E2;
+        font-size: 2rem;
+}
+
+.button {
+        background-color: #79AC78;
+        border-color: #79AC78;
+}
+
+#title {
+        color: #618264;
+}

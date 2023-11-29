@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+{% extends "base.html" %}
+{% block title %}Save Todo List{% endblock %}
+
+{% block content %}
+{% if request.method == 'GET' %}
+
+    <!-- A form to enter a list name and save To-Do. -->
+    <div class="col-md-10 mx-auto col-lg-5">
+        <form action="{{ url_for('save_list') }}" method="post" class="p-4 p-md-5 border rounded-3 bg-body-tertiary">
+
+          <div class="mb-3">
+              <p class="text-body-secondary">You can enter your own name for the Todo list to save it in the database.
+                  A number will be added to the name to uniquely identify your list.</p>
+              <input type="text" class="form-control" name="new_list_name" placeholder="Your list name"
+                     maxlength="250" pattern=".*\S+.*" title="Please enter at least one non-space character"
+                     required autofocus>
+          </div>
+
+          <!-- A button that allows the user to return to the main screen without saving. -->
+          <button type="submit" class="w-100 btn btn-lg btn-success">Save the list</button>
+          <hr class="my-4">
+          <p class="text-danger">NOTE: Your list is not password protected. You can find the list by name and the
+              unique number assigned to it. So make sure you don't include any sensitive information in your list.</p>
+          <a href="{{ url_for('main_page') }}" class="btn btn-sm btn-danger">
+              Go back without saving</a>
+        </form>
+    </div>
+{% else %}
+    <!-- Summary with user list name. -->
+    <div class="col-md-10 col-lg-5 p-md-5 mx-auto border rounded-3 bg-body-tertiary">
+          <p class="text-body-secondary mb-2">Your full list name is:</p>
+          <h1 class="text-center d-flex justify-content-center border mb-2">{{ name }}</h1>
+          <p class="text-body-secondary mb-2">Write down the full list name to find it later.</p>
+          <p class="text-body-secondary text-decoration-underline">To remove a list from the database, delete all
+              to-do items.</p>
+        <a href="{{ url_for('main_page') }}" class="w-100 btn btn-lg btn-success">Next</a>
+    </div>
+{% endif %}
+{% endblock %}
+
+</html>

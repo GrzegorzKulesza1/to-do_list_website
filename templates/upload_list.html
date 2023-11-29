@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+{% extends "base.html" %}
+{% block title %}Upload Todo List{% endblock %}
+
+{% block content %}
+<div class="col-md-10 mx-auto col-lg-5">
+        <form action="{{ url_for('upload_list') }}" method="post" class="p-4 p-md-5 border rounded-3 bg-body-tertiary">
+          <!-- Input to enter the name of a previously saved user list. -->
+          <div class="mb-3">
+              <p class="text-body-secondary">
+                  Enter a full name for your list in the correct format, E.g.,
+                  <span class="fst-italic">List#1234</span>
+              </p>
+              <!-- Flash message displayed if the list name provided by the user is not in the database. -->
+              {% with messages = get_flashed_messages() %}
+                  {% if messages %}
+                      {% for message in messages %}
+                           <p class="text-danger">
+                               The <span class="fst-italic">{{message}}</span> list is not found in the database.
+                               Please try again.<br> Remember that the list name consists of <strong>Name</strong>,
+                               <strong># sign</strong> and <strong>four digits.</strong>
+                           </p>
+                       {% endfor %}
+                   {% endif %}
+               {% endwith %}
+
+              <input type="text" class="form-control" name="list_name" placeholder="Your list name" maxlength="250"
+                     pattern=".*\S+.*" title="Please enter at least one non-space character" required autofocus>
+          </div>
+          <button type="submit" class="w-100 btn btn-lg btn-success">Upload the list</button>
+          <a href="{{url_for('main_page')}}" class="button w-100 btn btn-lg btn-success mt-2">
+            Back to home page
+            </a>
+        </form>
+    </div>
+{% endblock %}
+</html>

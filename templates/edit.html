@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+{% extends "base.html" %}
+{% block title %}Todo List{% endblock %}
+
+{% block content %}
+<p class="heading text-center fs-1">{{ list_name }}</p>
+
+<!-- To-do list -->
+<div class="container col-xl-10 col-xxl-8 px-4 py-2">
+    <div class="row g-lg-5 py-5">
+      <div class="col-lg-7 text-center text-lg-start">
+
+            {% for todo in all_todo %}
+                <ul class="list-group">
+                    <li class="list-group-item border-0">
+
+                        <!-- input field for renaming to-do -->
+                        <div class="form-check">
+                            <input class="form-check-input me-1" type="checkbox" name="completed"
+                                   value="{{loop.index0}}" disabled>
+
+                            {% if index == loop.index0 %}
+                                <form action="{{ url_for('edit', index=index) }}" method="post">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control mt-1" name="new_name"
+                                               value="{{todo.name}}" maxlength="250" pattern=".*\S+.*"
+                                               title="Please enter at least one non-space character" required autofocus>
+                                        <button type="submit" class="btn btn-success mt-1 me-4">Save</button>
+                                    </div>
+                                </form>
+
+                            {% else %}
+                                {% if todo.completed %}
+                                    <span class="text-decoration-line-through">{{ todo.name }}</span>
+                                    <a href="{{ url_for('edit', index=loop.index0) }}" class="btn btn-success">Edit</a>
+                                    <a href="{{ url_for('delete', index=loop.index0) }}" class="btn btn-danger">
+                                        Delete
+                                    </a>
+                                {% else %}
+                                    {{ todo.name }}
+                                    <a href="{{ url_for('edit', index=loop.index0) }}" class="btn btn-success">Edit</a>
+                                    <a href="{{ url_for('delete', index=loop.index0) }}" class="btn btn-danger">
+                                        Delete
+                                    </a>
+                                {% endif %}
+                            {% endif %}
+                        </div>
+                    </li>
+                </ul>
+            {% endfor %}
+
+      </div>
+
+<!-- Side menu for adding To-do. Completed To-do are disabled on this screen -->
+      <div class="col-md-10 mx-auto col-lg-5">
+        <form action="{{ url_for('add') }}" method="post" class="p-4 p-md-5 border rounded-3 bg-body-tertiary">
+
+          <div class="mb-3">
+              <p class="text-body-secondary">You can add a new thing to do below:</p>
+              <input type="text" class="form-control" name="new_todo" placeholder="New Todo" maxlength="250"
+                     pattern=".*\S+.*" title="Please enter at least one non-space character" required autofocus >
+          </div>
+
+          <button type="submit" class="w-100 btn btn-lg btn-success">Add Todo</button>
+              <hr class="my-4">
+              <p class="text-body-tertiary">You can cross out the selected todo by clicking the button below.</p>
+              <button type="submit" class="button btn btn-sm btn-secondary" disabled>
+                  Cross out the selected todo</button>
+        </form>
+      </div>
+    </div>
+</div>
+{% endblock %}
+</html>
